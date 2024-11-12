@@ -1,9 +1,11 @@
 import { posts } from '@/app/libs/placeholder-data';
 import Post from '@/app/ui/components/posts/Post';
 
-export default function Page({ params }: { params: { id: string } }) {
+// export default async function Page({ params }: { params: { id: string } }) {
+export default async function PostPage({ params }: { params: Promise<{ id: string }> }) {
 
-  const post = posts.find(post => post.id === params.id);
+  const post_id = (await params).id;
+  const post = posts.find(post => post.id === post_id);
 
   return (
     <>
