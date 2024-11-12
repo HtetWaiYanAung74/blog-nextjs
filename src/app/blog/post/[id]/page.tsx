@@ -4,7 +4,7 @@ import Post from '@/app/ui/components/posts/Post';
 // export default async function Page({ params }: { params: { id: string } }) {
 export default async function PostPage({ params }: { params: Promise<{ id: string }> }) {
 
-  const post_id = (await params).id;
+  const post_id: string = (await params).id!;
   const post = posts.find(post => post.id === post_id);
 
   return (
