@@ -1,4 +1,4 @@
-export const posts = [
+const posts = [
   {
     id: "a5e08164-b12b-4e72-9191-2f7daadb4e88",
     title: "Post Title 1",
@@ -80,6 +80,6 @@ export const posts = [
   }
 ];
 
-// module.exports = {
-//   posts,
-// };
+module.exports = {
+  posts
+};
