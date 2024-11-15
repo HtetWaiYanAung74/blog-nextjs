@@ -12,15 +12,18 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const session = await auth();
   const { searchParams } = new URL(request.url);
   const id = searchParams.get('id');
   const title = searchParams.get('title');
   const content = searchParams.get('content');
   const date = searchParams.get('date');
   const author = searchParams.get('author');
-  console.log(author);
 
   try {
+    if (!session) {
+      return NextResponse.json({ message: 'User not authenticated'}, { status: 401 });
+    }
     const post = await sql`INSERT INTO posts (id, author, title, content, date) VALUES (${id}, ${author}, ${title}, ${content}, ${date})`;
     return NextResponse.json({ message: 'Post has been created successfully'}, { status: 200 });
   } catch (error) {
