@@ -17,7 +17,7 @@ export default async function PostPage({ params }: { params: Promise<{ id: strin
   return (
     <>
       <h1>Post</h1>
-      <Post {...post} />
+      <Post id={post.id} title={post.title} content={post.content} date={post.date} />
     </>
   );
 }
