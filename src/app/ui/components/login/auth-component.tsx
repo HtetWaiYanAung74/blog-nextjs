@@ -1,4 +1,4 @@
-import React from "react";
+import { signIn, signOut } from "../../../../../auth.config";
 import { Button } from "@/app/ui/components/button";
 
 export function SignIn ({
@@ -9,6 +9,7 @@ export function SignIn ({
     <form
       action={async () => {
         "use server"
+        await signIn(provider)
       }}
     >
       <Button {...props}>Sign In</Button>
@@ -21,6 +22,7 @@ export function SignOut (props: React.ComponentPropsWithRef<typeof Button>) {
     <form
       action={async () => {
         "use server"
+        await signOut()
       }}
       className="w-full"
     >

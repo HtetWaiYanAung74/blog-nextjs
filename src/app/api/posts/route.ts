@@ -1,5 +1,6 @@
 import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
+import { auth } from "../../../../auth.config";
 
 export async function GET() {
   try {
@@ -16,9 +17,11 @@ export async function POST(request: Request) {
   const title = searchParams.get('title');
   const content = searchParams.get('content');
   const date = searchParams.get('date');
+  const author = searchParams.get('author');
+  console.log(author);
 
   try {
-    const post = await sql`INSERT INTO posts (id, author, title, content, date) VALUES (${id}, 'Sandra L', ${title}, ${content}, ${date})`;
+    const post = await sql`INSERT INTO posts (id, author, title, content, date) VALUES (${id}, ${author}, ${title}, ${content}, ${date})`;
     return NextResponse.json({ message: 'Post has been created successfully'}, { status: 200 });
   } catch (error) {
     return NextResponse.json({error}, { status: 500 });

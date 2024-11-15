@@ -1,18 +1,28 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { getSession } from "next-auth/react";
+import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
+import { User } from "@/app/lib/definition";
 
 export default function Page() {
 
   const router = useRouter();
+  const [user, setUser] = useState<User | null>(null);
   const [formData, setFormData] = useState({
     id: '',
     title: '',
     content: '',
     date: new Date().toISOString().slice(0, 10)
   });
+
+  useEffect(() => {
+    getSession().then(session => {
+      setUser(session?.user || null);
+    });
+  }, []);
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -25,7 +35,7 @@ export default function Page() {
   const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const uuid = uuidv4();
-    fetch(`/api/posts?id=${uuid}&title=${formData.title}&content=${formData.content}&date=${formData.date}`, {
+    fetch(`/api/posts?id=${uuid}&title=${formData.title}&author=${user?.name}&content=${formData.content}&date=${formData.date}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
