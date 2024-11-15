@@ -8,7 +8,7 @@ export default async function PostPage({ params }: { params: Promise<{ id: strin
   const posts = await getPosts();
 
   const post_id: string = (await params).id;
-  const post = posts?.find(post => post.id === '')!;
+  const post = posts?.find(post => post.id === post_id)!;
 
   if (!post) {
     notFound();
